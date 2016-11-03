@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F9BD61CF1DC871FE0039BEEC"
-               BuildableName = "Date.app"
-               BlueprintName = "Date"
-               ReferencedContainer = "container:Date.xcodeproj">
+               BlueprintIdentifier = "F9BD624D1DCB0EEE0039BEEC"
+               BuildableName = "PickerViewDemo.app"
+               BlueprintName = "PickerViewDemo"
+               ReferencedContainer = "container:PickerViewDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,30 +32,30 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F9BD61E81DC871FF0039BEEC"
-               BuildableName = "DateTests.xctest"
-               BlueprintName = "DateTests"
-               ReferencedContainer = "container:Date.xcodeproj">
+               BlueprintIdentifier = "F9BD62661DCB0EF00039BEEC"
+               BuildableName = "PickerViewDemoTests.xctest"
+               BlueprintName = "PickerViewDemoTests"
+               ReferencedContainer = "container:PickerViewDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F9BD61F31DC871FF0039BEEC"
-               BuildableName = "DateUITests.xctest"
-               BlueprintName = "DateUITests"
-               ReferencedContainer = "container:Date.xcodeproj">
+               BlueprintIdentifier = "F9BD62711DCB0EF00039BEEC"
+               BuildableName = "PickerViewDemoUITests.xctest"
+               BlueprintName = "PickerViewDemoUITests"
+               ReferencedContainer = "container:PickerViewDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F9BD61CF1DC871FE0039BEEC"
-            BuildableName = "Date.app"
-            BlueprintName = "Date"
-            ReferencedContainer = "container:Date.xcodeproj">
+            BlueprintIdentifier = "F9BD624D1DCB0EEE0039BEEC"
+            BuildableName = "PickerViewDemo.app"
+            BlueprintName = "PickerViewDemo"
+            ReferencedContainer = "container:PickerViewDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F9BD61CF1DC871FE0039BEEC"
-            BuildableName = "Date.app"
-            BlueprintName = "Date"
-            ReferencedContainer = "container:Date.xcodeproj">
+            BlueprintIdentifier = "F9BD624D1DCB0EEE0039BEEC"
+            BuildableName = "PickerViewDemo.app"
+            BlueprintName = "PickerViewDemo"
+            ReferencedContainer = "container:PickerViewDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,10 +94,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F9BD61CF1DC871FE0039BEEC"
-            BuildableName = "Date.app"
-            BlueprintName = "Date"
-            ReferencedContainer = "container:Date.xcodeproj">
+            BlueprintIdentifier = "F9BD624D1DCB0EEE0039BEEC"
+            BuildableName = "PickerViewDemo.app"
+            BlueprintName = "PickerViewDemo"
+            ReferencedContainer = "container:PickerViewDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

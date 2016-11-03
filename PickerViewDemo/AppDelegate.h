@@ -1,8 +1,8 @@
 //
 //  AppDelegate.h
-//  Date
+//  PickerViewDemo
 //
-//  Created by IRIGI-HuiMin on 11/1/16.
+//  Created by IRIGI-HuiMin on 11/3/16.
 //  Copyright © 2016 IRIGI-HuiMin. All rights reserved.
 //
 

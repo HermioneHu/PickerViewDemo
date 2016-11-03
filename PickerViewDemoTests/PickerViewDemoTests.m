@@ -1,18 +1,18 @@
 //
-//  DateTests.m
-//  DateTests
+//  PickerViewDemoTests.m
+//  PickerViewDemoTests
 //
-//  Created by IRIGI-HuiMin on 11/1/16.
+//  Created by IRIGI-HuiMin on 11/3/16.
 //  Copyright © 2016 IRIGI-HuiMin. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface DateTests : XCTestCase
+@interface PickerViewDemoTests : XCTestCase
 
 @end
 
-@implementation DateTests
+@implementation PickerViewDemoTests
 
 - (void)setUp {
     [super setUp];

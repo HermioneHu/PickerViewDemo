@@ -1,8 +1,8 @@
 //
 //  ViewController.m
-//  Date
+//  PickerViewDemo
 //
-//  Created by IRIGI-HuiMin on 11/1/16.
+//  Created by IRIGI-HuiMin on 11/3/16.
 //  Copyright © 2016 IRIGI-HuiMin. All rights reserved.
 //
 
@@ -25,7 +25,6 @@
 @property (nonatomic,assign)NSInteger c2row;
 @property (nonatomic,assign)NSInteger c3row;
 
-
 @end
 
 @implementation ViewController
@@ -33,7 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
     
     self.view.backgroundColor = [UIColor orangeColor];
     
@@ -76,7 +74,7 @@
     yearPV.dataSource = self;
     [self.view addSubview:yearPV];
     
-    
+
 }
 
 #pragma mark - UIPickerViewDataSource
@@ -98,7 +96,7 @@
         else if (component == 1)
         {
             NSInteger mNum = 12-[self.currentM integerValue]+1;
-
+            
             return mNum;
         }
         else if (component == 2)
@@ -107,7 +105,7 @@
             {
                 
                 NSInteger dNum = [self dayForMonth:[self.currentM integerValue]];
-
+                
                 return dNum;
             }
             else
@@ -118,18 +116,18 @@
         }
         else
         {
-           
+            
             if ( [self.selectM isEqualToString:self.currentM] && [self.selectD isEqualToString:self.currentD])
             {
                 
                 NSInteger hNum = 24-[self.currentH integerValue]+1;
-
+                
                 return hNum;
             }
             
             return 24;
         }
-
+        
     }
     else
     {
@@ -149,7 +147,7 @@
         {
             return 24;
         }
-
+        
     }
     
     
@@ -178,7 +176,7 @@
             }
             
             Y = [self.selectY integerValue];
-
+            
             
             if (((Y%4==0) && (Y%100!=0))|| (Y%400==0))
             {
@@ -230,7 +228,7 @@
     {
         return 414-100-50-50;
     }
-
+    
 }
 
 - (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -245,7 +243,7 @@
         else if (component == 1)
         {
             
-//            NSLog(@"return monthTitle %@------ %ld",[NSString stringWithFormat:@"%ld",[self.currentM integerValue] + row],row);
+            //            NSLog(@"return monthTitle %@------ %ld",[NSString stringWithFormat:@"%ld",[self.currentM integerValue] + row],row);
             return [NSString stringWithFormat:@"%ld",[self.currentM integerValue] + row];
         }
         else if (component == 2)
@@ -258,7 +256,7 @@
             {
                 return [NSString stringWithFormat:@"%ld",1+row];
             }
-//            NSLog(@"return dayTitle %@",[NSString stringWithFormat:@"%ld",[self.currentD integerValue]+row]);
+            //            NSLog(@"return dayTitle %@",[NSString stringWithFormat:@"%ld",[self.currentD integerValue]+row]);
         }
         else
         {
@@ -293,7 +291,7 @@
                 return [NSString stringWithFormat:@"%ld:00-%ld:00",1+row,1+row+1];
             }
             
-
+            
         }
     }
     else
@@ -315,7 +313,7 @@
         {
             return [NSString stringWithFormat:@"%ld:00-%ld:00",1+row,1+row+1];
         }
-
+        
     }
     
 }
@@ -324,7 +322,7 @@
 //- (NSInteger)workingTimeForRow:(NSInteger)row
 //{
 //    //上班时间7：00-18：00
-//    
+//
 //}
 
 
@@ -333,7 +331,7 @@
     
     
     NSLog(@"First %@   %@   %@  %@      %ld  %ld",self.selectY,self.selectM,self.selectD,self.selectH,row,component);
-
+    
     
     
     if (component == 0)
@@ -349,7 +347,7 @@
             self.selectM = [NSString stringWithFormat:@"%ld",self.c1row+1];
             
             NSInteger dNum = [self dayForMonth:[self.selectM integerValue]];
-
+            
             if (self.c2row+1 >= dNum)
             {
                 self.selectD = [NSString stringWithFormat:@"%02ld",dNum];
@@ -358,12 +356,12 @@
             {
                 self.selectD = [NSString stringWithFormat:@"%02ld",self.c2row+1];
             }
-
+            
             
             if (self.c3row+1 >= 24)
             {
                 self.selectH = [NSString stringWithFormat:@"%02d",0];
-
+                
             }
             else
             {
@@ -372,7 +370,7 @@
             
         }
         
-
+        
     }
     else if (component == 1)
     {
@@ -386,7 +384,7 @@
         {
             self.selectM = [NSString stringWithFormat:@"%02ld",1 + row];
         }
-
+        
     }
     else if (component == 2)
     {
@@ -420,13 +418,15 @@
             self.selectH = [NSString stringWithFormat:@"%02ld",1+row];
         }
     }
-
-    NSLog(@"last %@   %@   %@  %@",self.selectY,self.selectM,self.selectD,self.selectH);
+    
     [pickerView reloadAllComponents];
-    NSLog(@"last************* %@   %@   %@  %@",self.selectY,self.selectM,self.selectD,self.selectH);
-
-
+ 
+    
+    
 }
+
+
+
 
 
 - (void)didReceiveMemoryWarning {
