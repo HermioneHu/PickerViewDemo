@@ -25,6 +25,8 @@
 @property (nonatomic,assign)NSInteger c2row;
 @property (nonatomic,assign)NSInteger c3row;
 
+@property (nonatomic,retain)UILabel *showL;
+
 @end
 
 @implementation ViewController
@@ -33,7 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.view.backgroundColor = [UIColor orangeColor];
+//    self.view.backgroundColor = [UIColor orangeColor];
     
     //计算当前年 月 日
     NSDate *date = [NSDate date];
@@ -74,7 +76,15 @@
     yearPV.dataSource = self;
     [self.view addSubview:yearPV];
     
+    
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 300, 400, 50)];
+    label.text = [NSString stringWithFormat:@"当前时间 %@年%@月%@日%@",self.currentY,self.currentM,self.currentD,self.currentH];
+    [self.view addSubview:label];
 
+    
+    self.showL = [[UILabel alloc]initWithFrame:CGRectMake(0, 400, 400, 50)];
+    [self.view addSubview:self.showL];
 }
 
 #pragma mark - UIPickerViewDataSource
@@ -273,20 +283,17 @@
                 
                 if (hNum == 24)
                 {
-                    return [NSString stringWithFormat:@"%ld:00-%ld:00",hNum,hNum-24];
+                    return [NSString stringWithFormat:@"%ld:00-%ld:00",hNum,hNum-24+1];
                     
                 }
                 return [NSString stringWithFormat:@"%ld:00-%ld:00",hNum,hNum+1];
             }
             else
             {
-                if (row == 24)
+
+                if (1+row == 24)
                 {
-                    return [NSString stringWithFormat:@"%ld:00-%ld:00",row,row-24-1];
-                }
-                else if (row + 1 == 24)
-                {
-                    return [NSString stringWithFormat:@"%ld:00-%ld:00",1+row,1+row-24];
+                    return [NSString stringWithFormat:@"%ld:00-%ld:00",1+row,1+row-24+1];
                 }
                 return [NSString stringWithFormat:@"%ld:00-%ld:00",1+row,1+row+1];
             }
@@ -311,6 +318,12 @@
         }
         else
         {
+        
+            if (1+row == 24)
+            {
+                return [NSString stringWithFormat:@"%ld:00-%ld:00",1+row,1+row-24+1];
+            }
+            
             return [NSString stringWithFormat:@"%ld:00-%ld:00",1+row,1+row+1];
         }
         
@@ -325,20 +338,20 @@
 //
 //}
 
-
+// 当改变年到当年时，
+// 如果月日时未操作过,将月日时改为当前时间
+// 如果这三个操作过任何一个，将操作过的改到指定月日时
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    
-    
-    NSLog(@"First %@   %@   %@  %@      %ld  %ld",self.selectY,self.selectM,self.selectD,self.selectH,row,component);
-    
-    
     
     if (component == 0)
     {
         if (row == 0)
         {
+
             self.selectY = self.currentY;
+            
+            [self changeMonth];
             
         }
         else
@@ -346,29 +359,11 @@
             self.selectY = [NSString stringWithFormat:@"%ld",[self.currentY integerValue]+1];
             self.selectM = [NSString stringWithFormat:@"%ld",self.c1row+1];
             
-            NSInteger dNum = [self dayForMonth:[self.selectM integerValue]];
-            
-            if (self.c2row+1 >= dNum)
-            {
-                self.selectD = [NSString stringWithFormat:@"%02ld",dNum];
-            }
-            else
-            {
-                self.selectD = [NSString stringWithFormat:@"%02ld",self.c2row+1];
-            }
-            
-            
-            if (self.c3row+1 >= 24)
-            {
-                self.selectH = [NSString stringWithFormat:@"%02d",0];
-                
-            }
-            else
-            {
-                self.selectH = [NSString stringWithFormat:@"%02ld",self.c3row];
-            }
-            
         }
+        
+        [self changeDate];
+        
+        [self changeHour];
         
         
     }
@@ -379,11 +374,17 @@
         if ([self.selectY isEqualToString:self.currentY])
         {
             self.selectM = [NSString stringWithFormat:@"%02ld",[self.currentM integerValue] + row];
+
         }
         else
         {
             self.selectM = [NSString stringWithFormat:@"%02ld",1 + row];
+        
         }
+        
+        [self changeDate];
+        
+        [self changeHour];
         
     }
     else if (component == 2)
@@ -397,6 +398,8 @@
         else
         {
             self.selectD = [NSString stringWithFormat:@"%02ld",1 + row];
+            
+            [self changeHour];
         }
     }
     else
@@ -421,13 +424,127 @@
     
     [pickerView reloadAllComponents];
  
-    
+    self.showL.text = [NSString stringWithFormat:@"当前选择时间 %@年%@月%@日%@",self.selectY,self.selectM,self.selectD,self.selectH];
     
 }
 
 
+- (void)changeMonth
+{
+    if (1+self.c1row < [self.currentM integerValue])
+    {
+        self.selectM = self.currentM;
+    }
+    else
+    {
+        self.selectM = [NSString stringWithFormat:@"%ld",self.c1row+1];
+    }
+}
+
+- (void)changeDate
+{
+    if ([self.selectY isEqualToString:self.currentY] && [self.selectM isEqualToString:self.currentM])
+    {
+        if (self.c2row == 0)
+        {
+            self.selectD = self.currentD;
+        }
+        else
+        {
+            if (1+self.c2row < [self.currentD integerValue])
+            {
+                self.selectD = [NSString stringWithFormat:@"%02ld",1+self.c2row];
+            }
+            else
+            {
+                NSInteger dNum = [self dayForMonth:[self.selectM integerValue]];
+                
+                if (self.c2row+1 >= dNum)
+                {
+                    self.selectD = [NSString stringWithFormat:@"%02ld",dNum];
+                }
+                else
+                {
+                    self.selectD = [NSString stringWithFormat:@"%02ld",self.c2row+1];
+                }
+                
+            }
+
+        }
+    }
+    else
+    {
+        if (1+self.c2row < [self.currentD integerValue])
+        {
+            self.selectD = [NSString stringWithFormat:@"%02ld",1+self.c2row];
+        }
+        else
+        {
+            NSInteger dNum = [self dayForMonth:[self.selectM integerValue]];
+            
+            if (self.c2row+1 >= dNum)
+            {
+                self.selectD = [NSString stringWithFormat:@"%02ld",dNum];
+            }
+            else
+            {
+                self.selectD = [NSString stringWithFormat:@"%02ld",self.c2row+1];
+            }
+            
+        }
+    }
+    
 
 
+}
+
+- (void)changeHour
+{
+    
+    if ([self.selectY isEqualToString:self.currentY] && [self.selectM isEqualToString:self.currentM] && [self.selectD isEqualToString:self.currentD])
+    {
+        if (self.c3row == 0)
+        {
+            self.selectH = self.currentH;
+        }
+        else
+        {
+
+            if (1+self.c3row < [self.currentH integerValue])
+            {
+                self.selectH = [NSString stringWithFormat:@"%02ld",1+self.c3row];
+            }
+            else
+            {
+                if (self.c3row+1 >= 24)
+                {
+                    self.selectH = [NSString stringWithFormat:@"%02d",24];
+                    
+                }
+                else
+                {
+                    self.selectH = [NSString stringWithFormat:@"%02ld",1+self.c3row];
+                }
+            }
+        }
+    }
+    else
+    {
+
+        if (1+self.c3row >= 24)
+        {
+            self.selectH = [NSString stringWithFormat:@"%02d",24];
+            
+        }
+        else
+        {
+            self.selectH = [NSString stringWithFormat:@"%02ld",1+self.c3row];
+        }
+    
+    }
+    
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
