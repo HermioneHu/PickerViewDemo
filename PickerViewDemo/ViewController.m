@@ -120,6 +120,9 @@
             }
             else
             {
+                
+                NSLog(@"5555555 %@",self.selectM);
+                NSLog(@"5555555   %d",[self.selectM intValue]);
                 return [self dayForMonth:[self.selectM integerValue]];
             }
             
@@ -167,6 +170,9 @@
 
 - (NSInteger)dayForMonth:(NSInteger)month
 {
+    
+    NSLog(@"444444444 %ld",month);
+    
     NSInteger dNum=0;
     switch (month)
     {
@@ -213,9 +219,12 @@
     
     if ([self.selectY isEqualToString:self.currentY] && month == [self.currentM integerValue])
     {
+        NSLog(@"00000000   %ld",dNum-[self.currentD integerValue]+1);
+        
         return dNum-[self.currentD integerValue]+1;
     }
-    
+    NSLog(@"111111100000000   %ld   %ld",dNum,month);
+
     return dNum;
 }
 
@@ -431,13 +440,13 @@
 
 - (void)changeMonth
 {
-    if (1+self.c1row < [self.currentM integerValue])
+    if (1+self.c1row <= 12+1-[self.currentM integerValue])
     {
-        self.selectM = self.currentM;
+        self.selectM = [NSString stringWithFormat:@"%02ld",[self.currentM integerValue]+self.c1row];
     }
     else
     {
-        self.selectM = [NSString stringWithFormat:@"%ld",self.c1row+1];
+        self.selectM = [NSString stringWithFormat:@"%02d",12];
     }
 }
 
