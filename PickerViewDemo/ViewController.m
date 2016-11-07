@@ -97,6 +97,7 @@
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
+
     if ([self.selectY isEqualToString:self.currentY])
     {
         if (component == 0)
@@ -114,16 +115,23 @@
             if ([self.selectM isEqualToString:self.currentM])
             {
                 
-                NSInteger dNum = [self dayForMonth:[self.currentM integerValue]];
+                NSInteger dNum = [self dayForMonth:self.currentM];
                 
                 return dNum;
             }
             else
             {
                 
-                NSLog(@"5555555 %@",self.selectM);
-                NSLog(@"5555555   %d",[self.selectM intValue]);
-                return [self dayForMonth:[self.selectM integerValue]];
+//                NSLog(@"5555555 %@",self.selectM);
+//                NSLog(@"5555555   %d",[self.selectM intValue]);
+//                
+//                NSNumber *num = (NSNumber*)self.selectM;
+//                NSLog(@"%@",num);
+//                NSInteger a = [num integerValue];
+//        
+//                NSLog(@"%ld",a);
+
+                return [self dayForMonth:self.selectM];
             }
             
         }
@@ -154,7 +162,7 @@
         }
         else if (component == 2)
         {
-            return [self dayForMonth:[self.selectM integerValue]];
+            return [self dayForMonth:self.selectM];
         }
         else
         {
@@ -163,70 +171,133 @@
         
     }
     
-    
-    
+
     
 }
 
-- (NSInteger)dayForMonth:(NSInteger)month
+
+
+- (NSInteger)dayForMonth:(NSString *)month
 {
     
-    NSLog(@"444444444 %ld",month);
+    NSLog(@"444444444 %@",month);
     
     NSInteger dNum=0;
-    switch (month)
+    
+    
+    if ([month isEqualToString:@"4"]|| [month isEqualToString:@"6"] ||[month isEqualToString:@"9"] || [month isEqualToString:@"11"])
     {
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-            dNum = 30;
-            break;
-        case 2:
-            // 计算是否为闰年
+        dNum = 30;
+    }
+    else if ([month isEqualToString:@"1"]|| [month isEqualToString:@"3"] ||[month isEqualToString:@"5"] || [month isEqualToString:@"7"] ||[month isEqualToString:@"8"]|| [month isEqualToString:@"10"] || [month isEqualToString:@"12"])
+    {
+        dNum = 31;
+    }
+    else if ([month isEqualToString:@"2"])
+    {
+        // 计算是否为闰年
+        
+        NSInteger Y = 0;
+        if ([self.selectY isEqualToString:self.currentY])
         {
-            NSInteger Y = 0;
-            if ([self.selectY isEqualToString:self.currentY])
-            {
-                Y = [self.currentY integerValue];
-            }
-            
-            Y = [self.selectY integerValue];
-            
-            
-            if (((Y%4==0) && (Y%100!=0))|| (Y%400==0))
-            {
-                dNum = 29;
-            }
-            else
-            {
-                dNum = 28;
-            }
-            
-            
+            Y = [self.currentY integerValue];
         }
-            break;
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12:
-            dNum = 31;
-            break;
+        
+        Y = [self.selectY integerValue];
+        
+        
+        if (((Y%4==0) && (Y%100!=0))|| (Y%400==0))
+        {
+            dNum = 29;
+        }
+        else
+        {
+            dNum = 28;
+        }
+        
+    }
+    else
+    {
+
+        // 参数错误
+        
     }
     
-    if ([self.selectY isEqualToString:self.currentY] && month == [self.currentM integerValue])
+    
+    if ([self.selectY isEqualToString:self.currentY] && [month isEqualToString: self.currentM])
     {
         NSLog(@"00000000   %ld",dNum-[self.currentD integerValue]+1);
         
         return dNum-[self.currentD integerValue]+1;
     }
-    NSLog(@"111111100000000   %ld   %ld",dNum,month);
-
+    NSLog(@"111111100000000   %ld   %@",dNum,month);
+    
     return dNum;
 }
+
+//- (NSInteger)dayForMonth:(NSInteger)month
+//{
+//    
+//    NSLog(@"444444444 %ld",month);
+//    
+//    NSInteger dNum=0;
+//    
+//
+//    
+//    
+//    switch (month)
+//    {
+//        case 4:
+//        case 6:
+//        case 9:
+//        case 11:
+//            dNum = 30;
+//            break;
+//        case 2:
+//            // 计算是否为闰年
+//        {
+//            NSInteger Y = 0;
+//            if ([self.selectY isEqualToString:self.currentY])
+//            {
+//                Y = [self.currentY integerValue];
+//            }
+//            
+//            Y = [self.selectY integerValue];
+//            
+//            
+//            if (((Y%4==0) && (Y%100!=0))|| (Y%400==0))
+//            {
+//                dNum = 29;
+//            }
+//            else
+//            {
+//                dNum = 28;
+//            }
+//            
+//            
+//        }
+//            break;
+//        case 1:
+//        case 3:
+//        case 5:
+//        case 7:
+//        case 8:
+//        case 10:
+//        case 12:
+//            dNum = 31;
+//            break;
+//    }
+//    
+//    if ([self.selectY isEqualToString:self.currentY] && month == [self.currentM integerValue])
+//    {
+//        NSLog(@"00000000   %ld",dNum-[self.currentD integerValue]+1);
+//        
+//        return dNum-[self.currentD integerValue]+1;
+//    }
+//    NSLog(@"111111100000000   %ld   %ld",dNum,month);
+//
+//    return dNum;
+//}
 
 #pragma mark - UIPickerViewDelegate
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -466,7 +537,7 @@
             }
             else
             {
-                NSInteger dNum = [self dayForMonth:[self.selectM integerValue]];
+                NSInteger dNum = [self dayForMonth:self.selectM];
                 
                 if (self.c2row+1 >= dNum)
                 {
@@ -489,7 +560,7 @@
         }
         else
         {
-            NSInteger dNum = [self dayForMonth:[self.selectM integerValue]];
+            NSInteger dNum = [self dayForMonth:self.selectM];
             
             if (self.c2row+1 >= dNum)
             {
