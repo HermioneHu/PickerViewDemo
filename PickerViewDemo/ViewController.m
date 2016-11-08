@@ -122,14 +122,10 @@
             else
             {
                 
-//                NSLog(@"5555555 %@",self.selectM);
-//                NSLog(@"5555555   %d",[self.selectM intValue]);
-//                
-//                NSNumber *num = (NSNumber*)self.selectM;
-//                NSLog(@"%@",num);
-//                NSInteger a = [num integerValue];
-//        
-//                NSLog(@"%ld",a);
+                if ([self.selectM containsString:@"1"]&&[self.selectM containsString:@"2"])
+                {
+                    return [self dayForMonth:@"Dec"];
+                }
 
                 return [self dayForMonth:self.selectM];
             }
@@ -162,6 +158,10 @@
         }
         else if (component == 2)
         {
+            if ([self.selectM containsString:@"1"]&&[self.selectM containsString:@"2"])
+            {
+                return [self dayForMonth:@"Dec"];
+            }
             return [self dayForMonth:self.selectM];
         }
         else
@@ -185,15 +185,15 @@
     NSInteger dNum=0;
     
     
-    if ([month isEqualToString:@"4"]|| [month isEqualToString:@"6"] ||[month isEqualToString:@"9"] || [month isEqualToString:@"11"])
+    if ([month isEqualToString:@"04"]|| [month isEqualToString:@"06"] ||[month isEqualToString:@"09"] || [month isEqualToString:@"11"])
     {
         dNum = 30;
     }
-    else if ([month isEqualToString:@"1"]|| [month isEqualToString:@"3"] ||[month isEqualToString:@"5"] || [month isEqualToString:@"7"] ||[month isEqualToString:@"8"]|| [month isEqualToString:@"10"] || [month isEqualToString:@"12"])
+    else if ([month isEqualToString:@"01"]|| [month isEqualToString:@"03"] ||[month isEqualToString:@"05"] || [month isEqualToString:@"07"] ||[month isEqualToString:@"08"]|| [month isEqualToString:@"10"] || [month isEqualToString:@"Dec"])
     {
         dNum = 31;
     }
-    else if ([month isEqualToString:@"2"])
+    else if ([month isEqualToString:@"02"])
     {
         // 计算是否为闰年
         
@@ -437,7 +437,7 @@
         else
         {
             self.selectY = [NSString stringWithFormat:@"%ld",[self.currentY integerValue]+1];
-            self.selectM = [NSString stringWithFormat:@"%ld",self.c1row+1];
+            self.selectM = [NSString stringWithFormat:@"%02ld",self.c1row+1];
             
         }
         
@@ -479,22 +479,26 @@
         {
             self.selectD = [NSString stringWithFormat:@"%02ld",1 + row];
             
-            [self changeHour];
         }
+        
+        [self changeHour];
     }
     else
     {
         self.c3row = row;
         if ([self.selectY isEqualToString:self.currentY]&& [self.selectM isEqualToString:self.currentM] && [self.selectD isEqualToString:self.currentD])
         {
-            NSInteger dNum = [self.currentH integerValue]+row;
             
-            if (dNum > 24)
+            if (self.c3row == 0)
             {
-                self.selectH = [NSString stringWithFormat:@"%02ld",dNum-24];
+                self.selectH = self.currentH;
+            }
+            else
+            {
+            
+                self.selectH = [NSString stringWithFormat:@"%02ld",[self.currentH integerValue]+self.c3row];
                 
             }
-            self.selectH = [NSString stringWithFormat:@"%02ld",dNum];
         }
         else
         {
