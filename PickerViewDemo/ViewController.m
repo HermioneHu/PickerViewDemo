@@ -224,12 +224,26 @@
     }
     
     
-    if ([self.selectY isEqualToString:self.currentY] && [month isEqualToString: self.currentM])
+    if ([month isEqualToString:@"Dec"] && [self.currentM isEqualToString:@"12"])
     {
-        NSLog(@"00000000   %ld",dNum-[self.currentD integerValue]+1);
-        
-        return dNum-[self.currentD integerValue]+1;
+        if ([self.selectY isEqualToString:self.currentY])
+        {
+            NSLog(@"00000000   %ld",dNum-[self.currentD integerValue]+1);
+            
+            return dNum-[self.currentD integerValue]+1;
+        }
     }
+    else
+    {
+        if ([self.selectY isEqualToString:self.currentY] && [month isEqualToString: self.currentM])
+        {
+            NSLog(@"00000000   %ld",dNum-[self.currentD integerValue]+1);
+            
+            return dNum-[self.currentD integerValue]+1;
+        }
+    }
+    
+
     NSLog(@"111111100000000   %ld   %@",dNum,month);
     
     return dNum;
